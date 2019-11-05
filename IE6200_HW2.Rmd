@@ -1,0 +1,514 @@
+---
+title: "new_HW2"
+author: "Amal"
+date: "9/23/2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+install.packages('VennDiagram')
+```
+```{r}
+library(VennDiagram)
+```
+
+
+## Excercise 1
+Suppose a box contains 300 good light bulbs, 60 defective light bulbs and
+150 somewhat defective light bulbs. If one of the bulbs from the box is used and it does not immediately fail to work, what is the probability that the bulb is a good bulb (meaning that it is not somewhat defective)?
+
+Total bulbs (D) = 510 nos
++ Good light bulbs(A) = 300 nos
++ Probability of good bulb P(A)= 300/510 = 0.59
++ Defective light bulbs (y) = 60 nos
++ Probability of defective bulb P(y)= 60/510 = 0.12
++ Somewhat defective light bulbs (z)= 150 nos
++ Probability of somewhat defective bulb P(z) = 150/510 = 0.29
+
++ First let us calculate bulbs which selected fail to work (B)= 1-60/510
+```{r}
+Bulb_select_fail <- 1-(60/510)
+Bulb_select_fail
+```
+Probablity that first bulb selected is good and does not fail $P(A|B)$ = $P(A\cap B)/P(B)$
+```{r}
+Bulb_select_good <- 0.59 / 0.88
+Bulb_select_good
+```
+
+## Exercise 2
+
+BMW purchases car batteries from two different suppliers. A123Systems provides 60% of the
+batteries and E-One Moli Energy provides 40% of the batteries. If 6% of all A123Systems
+batteries are defective and 3% from E-One Moli Energy are defective.
+
+1. Draw the sample space and event diagram. Label all relevant events in the
+diagram
+
++ Let Total batteries (A) = 100
+```{r}
+A<-100
+```
++ Let batteries provided by A123 systems (B1) = 60
++ Probability of B1 = 0.6
+```{r}
+B1 <- 0.6
+```
++ Let batteries provided by E-one Moli energy (B2) = 40
++ Probability of B2 = 0.4
+```{r}
+B2 <-0.4
+```
++ Defective batteries from A123 systems (Z_m) = 6
+```{r}
+Z_m <-6
+```
++ Defective batteries from E-One Moli energy(Z_n) = 3
+```{r}
+Z_n <- 3
+```
+
+```{r}
+Venn <- grid.newpage() 
+draw.pairwise.venn(60, 40, 0, category = c("A123", "E-One Moli"), lty = rep(1, 2), fill = c("blue", "pink"), alpha = rep(0.5, 2))
+```
+
+![HW 21](/cloud/project/HW 21.png)
+
+
+2.a The probability a battery is defective given it is supplied by A123Systems.
++ Probability of Defective batteries from A123 systems will be denoted by $P(A|B1)$ 
+```{r}
+P_A_B1 <- Z_m/A
+P_A_B1
+```
+```{r}
+Venn <- grid.newpage() 
+draw.pairwise.venn(100, 6, 6, category = c("A", "Z_m"), lty = rep(1, 2), fill = c("blue", "pink"), alpha = rep(0.5, 2))
+```
+2.b The probability a battery is defective given it is supplied by E-One Moli
+energy.
++ Probability of Defective batteries from E-one Moli energy will be denoted by $P(A|B2)$ 
+```{r}
+P_A_B2 <- Z_n/A
+P_A_B2
+```
+```{r}
+Venn <- grid.newpage() 
+draw.pairwise.venn(100, 3, 3, category = c("A", "Z_n"), lty = rep(1, 2), fill = c("blue", "pink"), alpha = rep(0.5, 2))
+```
+2.c The probability a battery is defective and it is supplied by A123Systems.
+```{r}
+P_A_B1_1 <- P_A_B1*B1
+P_A_B1_1
+```
+```{r}
+Venn <- grid.newpage() 
+draw.pairwise.venn(60, 3.6, 3.6, category = c("B1", "P_A_B1_1"), lty = rep(1, 2), fill = c("blue", "pink"), alpha = rep(0.5, 2))
+```
+2.d The probability a battery is defective and it is supplied by E-One Moli
+energy.
+```{r}
+P_A_B2_1 <- P_A_B2*B2
+P_A_B2_1
+```
+```{r}
+Venn <- grid.newpage() 
+draw.pairwise.venn(40, 1.2, 1.2, category = c("B2", "P_A_B2_1"), lty = rep(1, 2), fill = c("blue", "pink"), alpha = rep(0.5, 2))
+```
+3. Find the probability that a randomly selected battery is not defective.
++ Let us first calculate that battery selected is defective
+```{r}
+P_Battery_def <- P_A_B1_1 + P_A_B2_1
+P_Battery_not_def <- 1-P_Battery_def
+P_Battery_not_def 
+```
+
+## Excercise 3
+You must show your work and all steps to receive full credit. If P(A) = 0.3, P(B) = 0.2, and P(A∩B) = 0.1 determine the following probabilities.
+
+1. $P(A')$
++ $P(A') = 1- P(A)$
++ $P(A')$ = 1-0.3 
++ $P(A')$ = 0.7 
+          
+2. $P(A \cup B)$
++ $P(A \cup B) = P(A) + P(B) - P(A\cap B)$
++ 0.3 + 0.2 - 0.1
++ 0.4
+
+3. $P(A' \cap  B)$
++ $P(A' \cap  B) =   P(B) - P(A\cap B) $
++ $P(A' \cap  B)$ = 0.2 - 0.1
++ $P(A' \cap  B)$ = 0.1
+
+4. $P(A \cap B')$
++ $P(A \cap B') =   P(A) - P(A\cap B) $
++ $P(A \cap B')$ = 0.3 - 0.1
++ $P(A \cap B')$ = 0.2
+
+5. $P[(A \cup B)']$
++ $P[(A \cup B)'] =  1-P(A\cup B)$
++ $P(A\cup B) $= 0.4
++ Putting back value of $P(A\cup B) in P[(A \cup B)'] =  1-P(A\cup B)$
++ $P[(A \cup B)']$ = 1 - 0.4
++ $P[(A \cup B)']$ = 0.6
+
+6. $P(A' \cup  B)$
++ $P(A' \cup  B) = P(A') + P(B) - P(A' \cap  B)$
++ $P(A' \cup  B)$ = 0.7 + 0.2 - 0.1
++ $P(A' \cup  B)$ = 0.8
+
+## Exercise 4
+You must provide a complete, well written solution.
+If A, B, and C are mutually exclusive events, is it possible for P(A) = 0.3, P(B) = 0.4, and P(C) = 0.5? Why or why not
+
++ As per the rule of probability - $P(A \cup B \cup C) \le 1$ so it should be $P(A) + P(B) + P(C) \le 1$
++ If we add all three probabilities given in the solution which is :
+  - P(A) + P(B) + P(C) 
+  - 0.3+0.4+0.5
+  - $1.2 \ge 1$
+so it is not possible
+
+## Exercise 6
+You must show your work and all steps to receive full credit. Disks of polycarbonate plastic from a supplier are analyzed for scratch and shock resistance. The results from 100 disks are summarized as follows.
+```{r}
+x <- c('Scratch_high', 'Resistance_low')
+Shock_high <- c(70,16)
+Resistance_low <- c(9,5)
+df <-  data.frame(x, Shock_high, Resistance_low)
+df
+```
+-- Let A = High_Shock_resistance = 86
+```{r}
+ A <-86
+```
+-- Let x = Total disk = 100
+```{r}
+x <-100
+```
+-- Let B = High scratch resistance = 79
+```{r}
+ B <- 79
+```
++ $P(A)$
+```{r}
+P_A <- A/x
+P_A
+```
++ $P(B)$
+```{r}
+P_B <- B/x
+P_B
+```
++ $P(A|B)$
++ Here $P(A|B)$ = $P(A\cap B)/ P(B)$
++ z = $P(A\cap B)$
+```{r}
+z<-70
+z
+```
+```{r}
+P_A_B <-70/79
+P_A_B
+```
++ $P(B|A)$
++ Here $P(B|A)$ = $P(B\cap A)/ P(A)$
++ z = $P(B\cap A)$
+```{r}
+P_B_A <- 70/86
+P_B_A
+```
+
+## Exercise 7
+You must show your work and all steps to receive full credit. A batch of 500 containers for frozen orange juice contains 5 that are defective. Two are selected, at random, without replacement from the batch.
+
++ What is the probability that the second one selected is defective given that the first
+one was defective?
+  - Containers = 500
+  - Defective container = 5
+  - As selection of Frozen orange juice is done without replacemen and it is given that first one is defective so probability of second orange juice (P_O_2):
+```{r}
+  P_O_A <- 4/499
+  P_O_A
+```
++ What is the probability that both are defective?
++ Let Probability of both are defective = P_Both_def
+```{r}
+P_Both_def <- 5/500 * 4/499
+P_Both_def
+```
++ What is the probability that both are acceptable?
++ Let Probability of both are acceptable = P_Both_Acc
+```{r}
+P_Both_Acc <- 495/500 * 494/499
+P_Both_Acc
+```
+## Exercise 8
+You must provide a complete, well written solution and include the image of your Venn diagram. You can use powerpoint (lucid chart, paint or any other program) to easily draw Venn diagrams and then save it as an image that you load into R Markdown or Overleaf. If P(A|B) = 1 must A = B? Draw a Venn diagram to explain your answer.
+
++ If $P(A|B)$ = 1 .
++ If we expand formula of $P(A|B)$  which is 
++ $P(A|B)$= $P(A \cap B)/ P(B)$
++ $P(A \cap B)$ =  P(B) = 1  
++ it mean that B is a subset of A and is contained in A
++  When $B \subset A$,then when B happens, A also happens. Thus, given that B occurred, we expect that probability of A P(A) = 1
++ Let us draw it in VENN diagram
+```{r}
+install.packages('futile.logger')
+install.packages('grid')
+install.packages('VennDiagram')
+```
+```{r}
+library(VennDiagram)
+```
++ Let us take area of A = 2 and area of B = 1
+```{r}
+Venn <- grid.newpage() 
+draw.pairwise.venn(2, 1, 0, category = c("A", "B"), lty = rep(1, 2), fill = c("blue", "pink"), alpha = rep(0.5, 2), cat.pos = c(0,0), cat.dist = rep(0.025, 2))
+```
++ Using above expression $P(A \cap B)$ =  P(B) = 1
+```{r}
+venn_1 <- grid.newpage() 
+draw.pairwise.venn(2, 1, 1, category = c("A", "B"), lty = rep(1, 2), fill = c("blue", "pink"), alpha = rep(0.5, 1))
+```
+## Exercise 9
+You must show your work and all steps to receive full credit. Incoming calls to a customer service center are classified as complaints (75% of the calls) or requests for information (25% of the calls). Of the complaints, 40% deal with computer equipment that does not respond and 57% deal with incomplete software installation and in the remaining 3% of complaints the user has improperly followed the installation instructions. The requests for information are evenly divided on technical questions (50%) and requests to purchase more products (50%)
+
+1. What is the probability that an incoming call to the service center will be from a
+customer who has not followed installation instructions properly?
+
++ Let Total number of Incoming calls = Incom_Call = 100
+```{r}
+Incom_Call<-100
+```
++ Total Complaint calls  75% = Incom_Comp_Call = 75
+```{r}
+Incom_Comp_Call <- 75
+```
++ Total Equipment related call  40%= Incom_Comp_Eq_Call = 30
+```{r}
+Incom_Comp_Eq_Call <- 30
+```
++Total Incomplete software installation related  57% = Incom_Comp_SW_Call = 42.75
+```{r}
+Incom_Comp_SW_Call <- 42.75
+```
++ Total Improper instruction followed  3%= Incom_Comp_Int_Call = 2.25
+```{r}
+Incom_Comp_Int_Call <-2.25
+```
++ Let us calculate  probability for Incom_Comp_Int_Call
+```{r}
+P_Incom_Comp_Int_Call <- Incom_Comp_Int_Call/Incom_Call
+P_Incom_Comp_Int_Call
+```
+2.  Find the probability that an incoming call is a request for purchasing more products
+
++ Total Information calls  25% = Incom_Info_Call = 25
+```{r}
+Incom_Info_Call <- 25
+```
++ Total information call technical related 50% = Incom_Info_tech_Call = 12.5
+```{r}
+Incom_Info_tech_Call <- 12.5
+```
++ Total information call More Product 50% = Incom_Info_Prod_Call = 12.5
+```{r}
+Incom_Info_Prod_Call <- 12.5
+```
++ Let us calculate  probability for Incom_Info_Prod_Call
+```{r}
+Incom_Info_Prod_Call <- Incom_Info_Prod_Call/Incom_Call
+Incom_Info_Prod_Call
+```
+## Exercise 10
+You must show your work and all steps to receive full credit. A batch of 25 injection molded parts contains 5 that have suffered excessive shrinkage.
+
+1. If two parts are selected at random and without replacement, what is the probability
+that the second part selected is one with excessive shrinkage?
+
++ For solving this we have to consider that first was and was not with excessive shrinkage
++ Let $X_B$ be first part has excessive shrinkage, $Y_B$ be second part has excessive shrinkage and $X_G$ be first part good shrinkage
+
+so Probability of $Y_B$ will be
+$P(Y_B) = P(Y_B|X_G) * P(X_G) + P(Y_B|X_B) * P(X_B)$
+```{r}
+P_Y_B_X_B <- 4/24
+P_X_B <- 5/25
+P_Y_B_X_G<- 5/24
+P_X_G <-20/25
+P_Y_B <- P_Y_B_X_G * P_X_G + P_Y_B_X_B*P_X_B
+P_Y_B
+```
+2. If three parts are selected at random and without replacement, what is the probability
+that the third part selected is one with excessive shrinkage?
+$X_j$ = $P(X_j|PX_m \cap B)$
++Here 4 cases will arrive
+```{r}
+x <- c('Case1','Case2','Case3','Case4')
+First_Part <- c('No_Shrinkage','No_Shrinkage','No_Shrinkage','No_Shrinkage')
+Second_Part<- c('No_Shrinkage','No_Shrinkage','Shrinkage','Shrinkage')
+Third_Part <-c('No_Shrinkage','Shrinkage','No_Shrinkage','Shrinkage')
+df <-  data.frame(x, First_Part, Second_Part, Third_Part)
+df
+```
++ Using the same equation for three parts:
++ Let $X_B$ be first part has excessive shrinkage, $S_B$ be second part has excessive shrinkage, $Z_B$ be Third part has excessive shrinkage 
++ When all 3 are excessive shrinkage : $P(X_B)*P(S_B|X_B)*P(Z_B|S_B.X_B)$
+```{r}
+P_X_B <- 5/25
+P_S_B_X_B <- 4/24
+P_Z_B_S_B_X_B <- 3/23
+P_X_B*P_S_B_X_B*P_Z_B_S_B_X_B
+```
++ Let $X_G$ be first part has no excessive shrinkage, $S_B$ be second part has excessive shrinkage, $Z_B$ be Third part has excessive shrinkage 
++ It will be denoted by : $P(X_G)*P(S_B|X_G)*P(Z_B|S_B.X_G)$
+```{r}
+P_X_G <- 20/25
+P_S_B_X_G <- 5/24
+P_Z_B_S_B_X_G <- 4/23
+P_X_G*P_S_B_X_G*P_Z_B_S_B_X_G
+```
++ Let $X_B$ be first part has  excessive shrinkage, $S_G$ be second part has no excessive shrinkage, $Z_B$ be Third part has excessive shrinkage 
++ It will be denoted by : $P(X_B)*P(S_G|X_B)*P(Z_B|S_G.X_G)$
+```{r}
+P_X_B <- 5/25
+P_S_G_X_B <- 20/24
+P_Z_B_S_G_X_B <- 4/23
+P_X_B*P_S_G_X_B*P_Z_B_S_G_X_B
+```
++ Let $X_G$ be first part has no  excessive shrinkage, $S_G$ be second part has no excessive shrinkage, $Z_B$ be Third part has excessive shrinkage 
++ It will be denoted by : $P(X_G)*P(S_G|X_G)*P(Z_B|S_G.X_G)$
+```{r}
+P_X_G <- 20/25
+P_S_G_X_G <- 19/24
+P_Z_B_S_G_X_G <- 5/23
+P_X_G*P_S_G_X_G*P_Z_B_S_G_X_G
+```
++ Let add all 4 cases
+```{r}
+P_X_G*P_S_G_X_G*P_Z_B_S_G_X_G + P_X_B*P_S_G_X_B*P_Z_B_S_G_X_B + P_X_G*P_S_B_X_G*P_Z_B_S_B_X_G + P_X_B*P_S_B_X_B*P_Z_B_S_B_X_B
+```
+## Exercise 11
+You must show your work and all steps to receive full credit. The probability that a lab specimen contains high levels of contamination is 0.10. Five samples are checked and the samples are independent.
+
+1. What is the probability that none contains high levels of contamination?
++ Let us denote specimen contain Probability of contamination with $C_{n}$ 
+```{r}
+C1 <- 0.10
+C2 <- 0.10
+C3 <- 0.10
+C4 <- 0.10
+C5 <- 0.10
+```
+
+None of the five sample has contamination will be represented by :
+$C1'\cap C2'\cap C3' \cap C4' \cap C5'$
+And Probability will be represented by :
+P_Not_Cont_All = $P(C1'\cap C2'\cap C3' \cap C4' \cap C5')$
+
++ Let us calculate probability for the same:
+  - P(C1') = P_C1_1 =  1-C1
+  - P(C2') = P_C2_1 =  1-C2
+  - P(C3') = P_C3_1 =  1-C3
+  - P(C4') = P_C4_1 =  1-C4
+  - P(C5') = P_C5_1 =  1-C5
+```{r}
+P_C1_1 <- 0.9
+P_C2_1 <- 0.9
+P_C3_1 <- 0.9
+P_C4_1 <- 0.9
+P_C5_1 <- 0.9
+```
++ Probability that specimen doesnot contain containment is :
++ P_Not_Cont_All = $P(C1'\cap C2'\cap C3' \cap C4' \cap C5')$
+```{r}
+P_Not_Cont_All <- P_C1_1*P_C2_1*P_C3_1*P_C4_1*P_C5_1
+P_Not_Cont_All
+```
+2. What is the probability that exactly one contains high levels of contamination?
+
++ Probability that exactly one specimen  contain containment is :
++ P_Cont_One = $P(C1'\cap C2'\cap C3' \cap C4' \cap C5)$
+```{r}
+P_Cont_One <- P_C1_1*P_C2_1*P_C3_1*P_C4_1*C5
+P_Cont_One
+```
+3. What is the probability that at least one contains high levels of contamination?
++ Probability that atleast one specimen  contain containment is :
++ P_Cont_At_One = 1 - P_Not_Cont_All
+```{r}
+P_Cont_At_One = 1 - P_Not_Cont_All
+P_Cont_At_One
+```
+## Exercise 12
+You must show your work and all steps to receivefull credit. Customers are used to evaluate preliminary product designs. In the past, 95% of highly successful products received good reviews, 60% of moderately successful products received good reviews, and 10% of poor products received good reviews. In addition, 40% of products have been highly successful, 35% have been moderately successful and 25% have been poor products.
+
+1. What is the probability that a product attains a good review?
+- Let us assume total number of products = 100
+```{r}
+ Total_Product <- 100
+```
+- Highly successful Product = 40 so Probability of highly successful Product
+```{r}
+ P_High_Success_Prod <- 40/Total_Product
+```
+- Moderate successful Prod = 35 so Probability of Moderate successful Product
+```{r}
+ P_Moderate_Success_Prod <- 35/Total_Product
+```
+- Poor Product = 25 so Probability of Poor Product
+```{r}
+ P_Poor_Prod <- 25/Total_Product
+```
+- Probability of Highly successful Product attains good review  = 95/100
+```{r}
+ P_High_Success_Prod_good_rev <- 95/100
+```
+- Probability of Moderate successful Prod attains good review  = 60/100
+```{r}
+ P_Moderate_Success_Prod_good_rev <- 60/100
+```
+- Probability of Poor Product attains good review = 10/100
+```{r}
+ P_Poor_Success_Prod_good_rev <- 10/100
+```
+- Probability that product attains good review:
++ We have to calculate the probability for Product received good review
+$\sum_{j}^{n} P(B|A_j)*P(A_j)$ 
+```{r}
+Product_good_rev <-(P_High_Success_Prod_good_rev * P_High_Success_Prod ) + (P_Moderate_Success_Prod_good_rev * P_Moderate_Success_Prod ) + ( P_Poor_Success_Prod_good_rev * P_Poor_Prod)
+Product_good_rev
+```
+2. If a new design attains a good review, what is the probability that it will be a highly successful product?
++ Let us denote probability of new deisgn attain good review by: $P(B|A1)*P(A1)/P(B)$
++ P_New_Design_good_review 
+```{r}
+P_New_Design_good_review <- (P_High_Success_Prod_good_rev * P_High_Success_Prod) /Product_good_rev 
+P_New_Design_good_review
+```
+3.  If a product does not attain a good review, what is the probability that it will be a
+highly successful product?
++ Let us denote probability of product not attain good review by:
++ P_product_not_good_review
+```{r}
+P_product_not_good_review <- 1-Product_good_rev
+P_product_not_good_review
+```
++ Let 5% of the highly successsful products received bad  reviews = P_High_Success_Prod_Bad_review
+```{r}
+P_High_Success_Prod_Bad_review <- 5/100
+P_High_Success_Prod_Bad_review
+```
++ Putting into formulas for Product not attained good review is highly successful product = P_Prod_bad_review_high_success:
+```{r}
+P_Prod_bad_review_high_success<-(P_High_Success_Prod_Bad_review*P_High_Success_Prod)/P_product_not_good_review
+P_Prod_bad_review_high_success
+```
